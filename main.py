@@ -30,8 +30,6 @@ def main() -> None:
 
     event_handler = EventHandler()
     player = Entity(int(screen_width / 2), int(screen_height / 2), "@", (255, 255, 255))
-    npc = Entity(int(screen_width / 2 - 5), int(screen_height / 2), "@", (255, 255, 0))
-    entities = {npc, player}
 
     # call the procgen function to generate dungeon (though this one is preordained)
     game_map = generate_dungeon(
@@ -42,7 +40,7 @@ def main() -> None:
         map_height=map_height,
         player=player
     )
-    engine = Engine(entities=entities, event_handler=event_handler, game_map=game_map, player=player)
+    engine = Engine(event_handler=event_handler, game_map=game_map, player=player)
 
     with tcod.context.new_terminal(
         screen_width,

@@ -68,19 +68,6 @@ def tunnel_between( start: Tuple[int, int], end: Tuple[int, int] ) -> Iterator[T
         for x, y in tcod.los.bresenham((corner_x+1, corner_y+1), (x2+1, y2+1)).tolist():
             yield x, y
 
-def generate_dungeon(map_width, map_height) -> GameMap:
-    dungeon = GameMap(map_width, map_height)
-
-    room_1 = RectangularRoom(x=20, y=15, width=10, height=15)
-    room_2 = RectangularRoom(x=35, y=15, width=10, height=15)
-
-    dungeon.tiles[room_1.inner] = tile_types.floor
-    dungeon.tiles[room_2.inner] = tile_types.floor
-    for x, y in tunnel_between(room_2.center, room_1.center):
-        dungeon.tiles[x, y] = tile_types.floor
-
-    return dungeon
-
 # sheesh. long. these are passed in from the main
 def generate_dungeon( 
     max_rooms: int,
@@ -91,7 +78,7 @@ def generate_dungeon(
     player: Entity,
 ) -> GameMap:
     """Generate a new dungeon map."""
-    dungeon = GameMap(map_width, map_height)
+    dungeon = GameMap(map_width, map_height, entities=[player])
 
     rooms: List[RectangularRoom] = [] # we'll keep a running list of all rooms
 
